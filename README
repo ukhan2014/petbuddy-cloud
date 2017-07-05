@@ -1,0 +1,4 @@
+Python Flask web server which will:
+  1. enumerate any petbuddy-device (PBD) which connects to the server and manage a connection to it.
+  2. enumerate any petbuddy-companion app (PBC) which connects to the server and manage a connection to it.
+  3. serve as a middleman between the PBD and the PBC.
