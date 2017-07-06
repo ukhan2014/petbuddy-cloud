@@ -2,3 +2,16 @@ Python Flask web server which will:
   1. enumerate any petbuddy-device (PBD) which connects to the server and manage a connection to it.
   2. enumerate any petbuddy-companion app (PBC) which connects to the server and manage a connection to it.
   3. serve as a middleman between the PBD and the PBC.
+
+To get the flask app working through apache on the AWS instance, you have to create a virtual environment
+using the virtualenv tool. This is because on AWS the environment is local, so all installed tools/utilities
+go under a weird ~/.local/ directory. Coupled with apache running as root user, this may have been causing
+problems. So what I had to do was create a virtualenv in my petbuddy-cloud directory, install flask in it
+and then add the following to the wsgi file:
+
+activate_this = '/path/to/virtualenv/bin/activate_this.py'
+execfile(activate_this, dict(__file__=activate_this)
+
+import sys
+sys.path.insert(0, '/path/to/flask/appname'
+
