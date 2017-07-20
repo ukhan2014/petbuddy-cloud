@@ -13,7 +13,7 @@ app.config["MAIL_PASSWORD"] = 'your-password'
 from routes import mail
 mail.init_app(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://your-username:your-password@localhost/development'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://petbuddycloud:h9%$mYD!QPgVz@localhost/development'
 
 from models import db
 db.init_app(app)
