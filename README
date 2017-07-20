@@ -18,3 +18,6 @@ sys.path.insert(0, '/path/to/flask/appname')
 
 A mysql database is used on the aws instance. To access via command line:
 $ mysql -u username -p     # username is root, password hint is calgary
+
+Table structure in db that stores info about PBDs:
+serial_no	last_ping	ip_add	email_add	password
