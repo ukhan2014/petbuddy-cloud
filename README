@@ -16,8 +16,16 @@ execfile(activate_this, dict(__file__=activate_this)
 import sys
 sys.path.insert(0, '/path/to/flask/appname')
 
-A mysql database is used on the aws instance. To access via command line:
-$ mysql -u username -p     # username is root, password hint is calgary
+***********************************************************************************
+the mysql db
+*************
+To access db:
+   ubuntu:$ mysql -u root -p
+This will give you a sql prompt like:
+   mysql>
+We are using the development db. To see names of all the dbs:
+   mysql> show databases;
 
 Table structure in db that stores info about PBDs:
-serial_no	last_ping	ip_add	email_add	password
+| serial_no | last_ping	| ip_add | email_add | password |
+***********************************************************************************
