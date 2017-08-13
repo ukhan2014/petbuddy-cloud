@@ -29,7 +29,7 @@ We are using the development db. To see names of all the dbs:
 Table structure in db that stores info about PBDs:
 | serial_no | last_ping	| ip_add | email_add | password |
 
-mysql> describe pbd_users;
+mysql> describe pbdusrs;
 +-----------+--------------+------+-----+---------+----------------+
 | Field     | Type         | Null | Key | Default | Extra          |
 +-----------+--------------+------+-----+---------+----------------+
@@ -37,7 +37,7 @@ mysql> describe pbd_users;
 | serial_no | varchar(100) | NO   |     | NULL    |                |
 | last_ping | int(11)      | NO   |     | NULL    |                |
 | ip_add    | varchar(100) | NO   |     | NULL    |                |
-| email_add | varchar(120) | NO   | UNI | NULL    |                |
+| email     | varchar(120) | NO   | UNI | NULL    |                |
 | pwdhash   | varchar(100) | NO   |     | NULL    |                |
 +-----------+--------------+------+-----+---------+----------------+
 
