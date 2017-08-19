@@ -17,6 +17,17 @@ import sys
 sys.path.insert(0, '/path/to/flask/appname')
 
 ***********************************************************************************
+1. First install mysql
+   - check if you have it:
+     $ mysql --version
+   - if not then:
+     $ sudo apt-get install mysql-server mysql-client
+   - mysql-server will ask for root install password during install, set
+     this and save it in something like keepass
+
+2. ....
+
+
 the mysql db
 *************
 To access db:
@@ -44,3 +55,5 @@ mysql> describe pbdusrs;
 ***********************************************************************************
 
 Removed stuff from Amazon AWS and switched to home raspi server.
+
+***********************************************************************************
