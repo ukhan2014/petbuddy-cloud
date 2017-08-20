@@ -5,6 +5,31 @@ Python Flask web server which will:
   4. use a sql server which will track all PBDs out in the field. It will offer a signup process during the onboarding that will be accessed through the PBC app and perhaps also a web interface
 
 
+1. Clone the petbuddy_cloud repo
+
+2. Install virtualenv:
+   $ sudo apt-get install virtualenv
+   $ virtualenv --version
+   $ virtualenv petbuddy_cloud          #this will create a virtual python environment inside the petbuddy_cloud folder
+   $ cd petbuddy_cloud
+   $ . bin/activate                     #this will get virtualenv to treat this like a local environment, after this
+                                        #the shell prompt will have (petbuddy_cloud) before the $ sign:
+   (petbuddy_cloud) $                   #Now everything that is installed for python using pip will be installed locally in this folder
+
+   You can see the local virtual environment that is created by using the tree command inside the petbuddy_cloud folder:
+   (petbuddy_cloud) cabana@cabana-desktop:~/petbuddy_cloud$ tree -L 1
+    .
+    ├── bin
+    ├── include
+    ├── lib
+    ├── local
+    ├── petbuddy_cloud
+    ├── petbuddy.wsgi
+    ├── pip-selfcheck.json
+    ├── README
+    ├── runserver.py
+    └── share
+
 
 2. Install mysql:
 
