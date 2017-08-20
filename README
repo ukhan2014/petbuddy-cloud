@@ -4,6 +4,75 @@ Python Flask web server which will:
   3. serve as a middleman between the PBD and the PBC.
   4. use a sql server which will track all PBDs out in the field. It will offer a signup process during the onboarding that will be accessed through the PBC app and perhaps also a web interface
 
+
+
+2. Install mysql:
+
+              *************************************************************************************
+              * 1. First install mysql
+              *    - check if you have it:
+              *      $ mysql --version
+              *    - if not then:
+              *      $ sudo apt-get install mysql-server mysql-client
+              *    - mysql-server will ask for root install password during install, set
+              *      this and save it in something like keepass
+              *
+              * 2. Sign into mysql
+              *    - $ mysql -u root -p
+              *
+              *
+              * 3. Create a user for the petbuddy application that will run on the server. This
+              *    user will be the petbuddy app itself. Whenever the app needs to access user
+              *    info, it will access the database as this user:
+              *    - CREATE USER 'petbuddycloud'@'localhost' IDENTIFIED BY 'soMeP@55W0RD';
+              *        ** We set it for localhost so that only the local app can have access
+              *    - GRANT ALL ON petbuddycloud.* TO 'petbuddycloud'@'localhost';
+              *        ** give all db permissions to user=petbuddycloud for database=petbuddycloud
+              *
+              * 4. Create a database where we will store our data tables
+              *   - CREATE DATABASE development;
+              *
+              * 5. Create a table under the development database:
+              *   - CREATE TABLE pbdusrs (
+              *       device_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+              *       serial_no VARCHAR(100) NOT NULL,
+              *       last_ping INT NOT NULL,
+              *       ip_add VARCHAR(100) NOT NULL,
+              *       email VARCHAR(120) NOT NULL UNIQUE,
+              *       pwdhash VARCHAR(100) NOT NULL
+              *     );
+              *
+              *************************************************************************************
+
+
+
+              Additional info:
+              ****************
+              To access db:
+                 ubuntu:$ mysql -u root -p
+              This will give you a sql prompt like:
+                 mysql>
+              We are using the development db. To see names of all the dbs:
+                 mysql> show databases;
+
+              Table structure in db that stores info about PBDs:
+              | serial_no | last_ping	| ip_add | email_add | password |
+
+              mysql> describe pbdusrs;
+              +-----------+--------------+------+-----+---------+----------------+
+              | Field     | Type         | Null | Key | Default | Extra          |
+              +-----------+--------------+------+-----+---------+----------------+
+              | device_id | int(11)      | NO   | PRI | NULL    | auto_increment |
+              | serial_no | varchar(100) | NO   |     | NULL    |                |
+              | last_ping | int(11)      | NO   |     | NULL    |                |
+              | ip_add    | varchar(100) | NO   |     | NULL    |                |
+              | email     | varchar(120) | NO   | UNI | NULL    |                |
+              | pwdhash   | varchar(100) | NO   |     | NULL    |                |
+              +-----------+--------------+------+-----+---------+----------------+
+
+***********************************************************************************
+
+Stuff handy for setup on Amazon AWS:
 To get the flask app working through apache on the AWS instance, you have to create a virtual environment
 using the virtualenv tool. This is because on AWS the environment is local, so all installed tools/utilities
 go under a weird ~/.local/ directory. Coupled with apache running as root user, this may have been causing
@@ -15,44 +84,6 @@ execfile(activate_this, dict(__file__=activate_this)
 
 import sys
 sys.path.insert(0, '/path/to/flask/appname')
-
-***********************************************************************************
-1. First install mysql
-   - check if you have it:
-     $ mysql --version
-   - if not then:
-     $ sudo apt-get install mysql-server mysql-client
-   - mysql-server will ask for root install password during install, set
-     this and save it in something like keepass
-
-2. ....
-
-
-the mysql db
-*************
-To access db:
-   ubuntu:$ mysql -u root -p
-This will give you a sql prompt like:
-   mysql>
-We are using the development db. To see names of all the dbs:
-   mysql> show databases;
-
-Table structure in db that stores info about PBDs:
-| serial_no | last_ping	| ip_add | email_add | password |
-
-mysql> describe pbdusrs;
-+-----------+--------------+------+-----+---------+----------------+
-| Field     | Type         | Null | Key | Default | Extra          |
-+-----------+--------------+------+-----+---------+----------------+
-| device_id | int(11)      | NO   | PRI | NULL    | auto_increment |
-| serial_no | varchar(100) | NO   |     | NULL    |                |
-| last_ping | int(11)      | NO   |     | NULL    |                |
-| ip_add    | varchar(100) | NO   |     | NULL    |                |
-| email     | varchar(120) | NO   | UNI | NULL    |                |
-| pwdhash   | varchar(100) | NO   |     | NULL    |                |
-+-----------+--------------+------+-----+---------+----------------+
-
-***********************************************************************************
 
 Removed stuff from Amazon AWS and switched to home raspi server.
 
