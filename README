@@ -5,33 +5,71 @@ Python Flask web server which will:
   4. use a sql server which will track all PBDs out in the field. It will offer a signup process during the onboarding that will be accessed through the PBC app and perhaps also a web interface
 
 
-1. Clone the petbuddy_cloud repo
+1. Clone the petbuddy_cloud repo and Install python2
 
 2. Install virtualenv:
-   $ sudo apt-get install virtualenv
-   $ virtualenv --version
-   $ virtualenv petbuddy_cloud          #this will create a virtual python environment inside the petbuddy_cloud folder
-   $ cd petbuddy_cloud
-   $ . bin/activate                     #this will get virtualenv to treat this like a local environment, after this
-                                        #the shell prompt will have (petbuddy_cloud) before the $ sign:
-   (petbuddy_cloud) $                   #Now everything that is installed for python using pip will be installed locally in this folder
+             $ sudo apt-get install virtualenv
+             $ virtualenv --version
+             $ virtualenv petbuddy_cloud          #this will create a virtual python environment inside the petbuddy_cloud folder
+             $ cd petbuddy_cloud
+             $ . bin/activate                     #this will get virtualenv to treat this like a local environment, after this
+                                                  #the shell prompt will have (petbuddy_cloud) before the $ sign:
+             (petbuddy_cloud) $                   #Now everything that is installed for python using pip will be installed locally in this folder
 
-   You can see the local virtual environment that is created by using the tree command inside the petbuddy_cloud folder:
-   (petbuddy_cloud) cabana@cabana-desktop:~/petbuddy_cloud$ tree -L 1
-    .
-    ├── bin
-    ├── include
-    ├── lib
-    ├── local
-    ├── petbuddy_cloud
-    ├── petbuddy.wsgi
-    ├── pip-selfcheck.json
-    ├── README
-    ├── runserver.py
-    └── share
+             You can see the local virtual environment that is created by using the tree command inside the petbuddy_cloud folder:
+             (petbuddy_cloud) cabana@cabana-desktop:~/petbuddy_cloud$ tree -L 1
+              .
+              ├── bin
+              ├── include
+              ├── lib
+              ├── local
+              ├── petbuddy_cloud
+              ├── petbuddy.wsgi
+              ├── pip-selfcheck.json
+              ├── README
+              ├── runserver.py
+              └── share
 
+3. Install python stuff:
+             - pip install Flask
+             - pip install flask-wtf
+             - pip install flask-mail
+             - pip install flask-sqlalchemy
 
-2. Install mysql:
+4. Install apache2 and mod wsgi:
+             $ sudo apt-get install apache2
+                ** visit the ip address of the server machine from an external machine's browser
+                   you should see the apache2 Ubuntu default page
+
+             $ sudo apt-get install libapache2-mod-wsgi python-dev
+                ** WSGI (Web Server Gateway Interface) is an interface between web servers and web
+                   apps for python. Mod_wsgi is an Apache HTTP server mod that enables Apache to 
+                   serve Flask applications.
+
+             $ cd /var/www
+             $ ls
+                ** there should be a html folder in here
+             $ sudo ln -s /path/to/petbuddy_cloud ./petbuddy_cloud
+                ** this will create a symlink to the petbuddy_cloud repo so that apache sees it
+
+             $ sudo cp petbuddy_cloud/apache/petbuddy_cloud.conf /etc/apache2/sites-available
+                ** This will configure a new virtual host for petbuddy_cloud app with apache
+
+             $ sudo a2ensite petbuddy_cloud
+             Enabling site petbuddy_cloud.
+             To activate the new configuration, you need to run:
+               service apache2 reload
+                ** This will enable the virtual host
+
+             - Location of apache logs:
+               /var/log/apache2/error.log
+             - To restart the apache server:
+             $ sudo apachectl restart
+             
+
+5. 
+
+4. mysql setup:
 
               *************************************************************************************
               * 1. First install mysql
@@ -97,6 +135,8 @@ Python Flask web server which will:
 
 ***********************************************************************************
 
+Removed stuff from Amazon AWS and switched to home raspi server. Amazon was charging.
+
 Stuff handy for setup on Amazon AWS:
 To get the flask app working through apache on the AWS instance, you have to create a virtual environment
 using the virtualenv tool. This is because on AWS the environment is local, so all installed tools/utilities
@@ -109,7 +149,5 @@ execfile(activate_this, dict(__file__=activate_this)
 
 import sys
 sys.path.insert(0, '/path/to/flask/appname')
-
-Removed stuff from Amazon AWS and switched to home raspi server.
 
 ***********************************************************************************
