@@ -36,6 +36,11 @@ Python Flask web server which will:
              - pip install flask-mail
              - pip install flask-sqlalchemy
 
+             - pip install mysql-python
+               ** if this fails then try this:
+                  $ apt-get install libmysqlclient-dev
+                  $ pip install mysql-python
+
 4. Install apache2 and mod wsgi:
              $ sudo apt-get install apache2
                 ** visit the ip address of the server machine from an external machine's browser
@@ -79,11 +84,6 @@ Python Flask web server which will:
                    up removing the 000-default.conf file and renaming my
                    petbuddy_cloud.conf file to 000-default.conf
 
-             
-
-
-5. 
-
 4. mysql setup:
 
               *************************************************************************************
@@ -98,19 +98,10 @@ Python Flask web server which will:
               * 2. Sign into mysql
               *    - $ mysql -u root -p
               *
-              *
-              * 3. Create a user for the petbuddy application that will run on the server. This
-              *    user will be the petbuddy app itself. Whenever the app needs to access user
-              *    info, it will access the database as this user:
-              *    - CREATE USER 'petbuddycloud'@'localhost' IDENTIFIED BY 'soMeP@55W0RD';
-              *        ** We set it for localhost so that only the local app can have access
-              *    - GRANT ALL ON petbuddycloud.* TO 'petbuddycloud'@'localhost';
-              *        ** give all db permissions to user=petbuddycloud for database=petbuddycloud
-              *
-              * 4. Create a database where we will store our data tables
+              * 3. Create a database where we will store our data tables
               *   - CREATE DATABASE development;
-              *
-              * 5. Create a table under the development database:
+              * 
+              * 4. Create a table under the development database:
               *   - CREATE TABLE pbdusrs (
               *       device_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
               *       serial_no VARCHAR(100) NOT NULL,
@@ -119,6 +110,15 @@ Python Flask web server which will:
               *       email VARCHAR(120) NOT NULL UNIQUE,
               *       pwdhash VARCHAR(100) NOT NULL
               *     );
+              *
+              * 5. Create a user for the petbuddy application that will run on the server. This
+              *    user will be the petbuddy app itself. Whenever the app needs to access user
+              *    info, it will access the database as this user:
+              *    - CREATE USER 'petbuddycloud'@'localhost' IDENTIFIED BY 'soMeP@55W0RD';
+              *        ** We set it for localhost so that only the local app can have access
+              *    - GRANT ALL PRIVILEGES ON development.* TO 'petbuddycloud'@'localhost' identified by 'soMeP@55W0RD'
+              *        ** give all db permissions to user=petbuddycloud for database=development
+              *
               *
               *************************************************************************************
 
