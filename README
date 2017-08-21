@@ -30,7 +30,7 @@ Python Flask web server which will:
               ├── runserver.py
               └── share
 
-3. Install python stuff:
+3. Install python stuff, this must be done in the virtualenv:
              - pip install Flask
              - pip install flask-wtf
              - pip install flask-mail
@@ -52,20 +52,35 @@ Python Flask web server which will:
              $ sudo ln -s /path/to/petbuddy_cloud ./petbuddy_cloud
                 ** this will create a symlink to the petbuddy_cloud repo so that apache sees it
 
-             $ sudo cp petbuddy_cloud/apache/petbuddy_cloud.conf /etc/apache2/sites-available
-                ** This will configure a new virtual host for petbuddy_cloud app with apache
+             $ sudo cp petbuddy_cloud/apache/petbuddy_cloud.conf /etc/apache2/sites-available/000-default.conf
+                ** This will configure a new virtual host for petbuddy_cloud app with apache.
+                   There is apparently a better way to do this, with each site having it's own
+                   conf file, but for me something was missing and I didn't have time to make
+                   it work. 
 
+             - Location of apache logs:
+               /var/log/apache2/error.log
+               ** This log file will help debug if the site doesn't load or has some errors.
+                  A good way to use it is to delete it and then restart apache, and then check
+                  the logs.
+             - To restart the apache server:
+             $ sudo apachectl restart
+
+             - Better way to setup the conf file is to name the conf file petbuddy_cloud
+               and then:
              $ sudo a2ensite petbuddy_cloud
              Enabling site petbuddy_cloud.
              To activate the new configuration, you need to run:
                service apache2 reload
                 ** This will enable the virtual host
+                ** With this method the 000-default.conf file that was already there
+                   for the default apache web page kept displaying that index.html
+                   file whenever I accessed the server from outside. So I just ended
+                   up removing the 000-default.conf file and renaming my
+                   petbuddy_cloud.conf file to 000-default.conf
 
-             - Location of apache logs:
-               /var/log/apache2/error.log
-             - To restart the apache server:
-             $ sudo apachectl restart
              
+
 
 5. 
 
