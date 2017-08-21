@@ -10,8 +10,9 @@ class ContactForm(Form):
   submit = SubmitField("Send")
 
 class SignupForm(Form):
-  firstname = TextField("First name",  [validators.Required("Please enter your first name.")])
-  lastname = TextField("Last name",  [validators.Required("Please enter your last name.")])
+  serial_no = TextField("Serial Number",  [validators.Required("Please enter your device's serial number")])
+  last_ping = TextField("last_ping")
+  ip_add = TextField("IP address", [validators.Required("IP required")])
   email = TextField("Email",  [validators.Required("Please enter your email address."), validators.Email("Please enter your email address.")])
   password = PasswordField('Password', [validators.Required("Please enter a password.")])
   submit = SubmitField("Create account")
