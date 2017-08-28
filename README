@@ -148,6 +148,18 @@ Python Flask web server which will:
               | pwdhash   | varchar(100) | NO   |     | NULL    |                |
               +-----------+--------------+------+-----+---------+----------------+
 
+              Debugging stuff with tables in database:
+              ****************************************
+              First sign into mysql root:
+                PB> mysql -u root -p
+
+              To see the entries in the development.pbdusrs table:
+                mysql> use development;
+                mysql> select * from pbdusrs;
+
+              To delete an row from the table:
+                mysql> delete from pbdusrs where email =  "email.address@domain.com"; 
+
 ***********************************************************************************
 
 Removed stuff from Amazon AWS and switched to home raspi server. Amazon was charging.
