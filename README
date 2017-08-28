@@ -84,7 +84,13 @@ Python Flask web server which will:
                    up removing the 000-default.conf file and renaming my
                    petbuddy_cloud.conf file to 000-default.conf
 
-4. mysql setup:
+5. Webapp:
+            Automated welcome e-mail:
+            Need to modify the __init__.py file to contain the app e-mail account login info under:
+              app.config["MAIL_USERNAME"] = 'user.name@domain.com'
+              app.config["MAIL_PASSWORD"] = "S0m3P@55w0rd"
+
+6. mysql setup:
 
               *************************************************************************************
               * 1. First install mysql
