@@ -6,6 +6,22 @@ from models import db, User
 
 mail = Mail()
 
+
+def sendWelcomeEmail(email_address_str, serial_no):
+  msg_data = """
+    Welcome to PetBuddy!
+    You are all signed up as a PetBuddy user and
+    your device is now registered!
+    
+    Your device serial is %s. 
+  """ % (serial_no)
+  msg = Message("Welcome", sender='PetBuddy Cloud', recipients=[email_address_str])
+  msg.body = """
+      From: PetBuddy Cloud <petbuddy.cloud@gmail.com>
+      %s
+      """ % (msg_data)
+  mail.send(msg)
+
 @app.route('/')
 def home():
   return render_template('home.html')
@@ -50,6 +66,7 @@ def signup():
       db.session.add(newuser)
       db.session.commit()
       
+      sendWelcomeEmail(form.email.data, form.serial_no.data)
       session['email'] = newuser.email
       return redirect(url_for('profile'))
   
