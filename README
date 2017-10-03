@@ -124,7 +124,9 @@ Python Flask web server which will:
               *        ** We set it for localhost so that only the local app can have access
               *    - GRANT ALL PRIVILEGES ON development.* TO 'petbuddycloud'@'localhost' identified by 'soMeP@55W0RD'
               *        ** give all db permissions to user=petbuddycloud for database=development
-              *
+              *     
+              *    To see all the users:
+              *    SELECT User, Host, Password FROM mysql.user;
               *
               *************************************************************************************
 
