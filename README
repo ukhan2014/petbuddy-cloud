@@ -132,6 +132,9 @@ Python Flask web server which will:
               *     insert into pbdusrs (serial_no, last_ping, ip_add, email, pwdhash)
               *     values ("3rdpbd", 40, "192.168.1.155", "example@gmul.com", "8838");
               *
+              *    To update a row in the table:
+              *     UPDATE pbdusrs SET last_ping = 68, ip_add = "192.168.1.155" WHERE device_id = 3;
+              *
               *************************************************************************************
 
 
