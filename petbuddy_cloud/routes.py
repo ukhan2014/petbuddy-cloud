@@ -3,17 +3,20 @@ from flask import render_template, request, flash, session, url_for, redirect
 from forms import ContactForm, SignupForm, SigninForm
 from flask_mail import Message, Mail
 from models import db, User
+from sqlalchemy.orm import exc as orm_exc
+import time
+#import sys
 
 mail = Mail()
-
+#sys.stdout = open('/home/pi/development/petbuddy_cloud/logs.txt', 'w')
 
 def sendWelcomeEmail(email_address_str, serial_no):
   msg_data = """
     Welcome to PetBuddy!
     You are all signed up as a PetBuddy user and
     your device is now registered!
-    
-    Your device serial is %s. 
+
+    Your device serial is %s.
   """ % (serial_no)
   msg = Message("Welcome", sender='PetBuddy Cloud', recipients=[email_address_str])
   msg.body = """
@@ -57,7 +60,7 @@ def signup():
 
   if 'email' in session:
     return redirect(url_for('profile')) 
-  
+
   if request.method == 'POST':
     if form.validate() == False:
       return render_template('signup.html', form=form)
@@ -65,13 +68,33 @@ def signup():
       newuser = User(form.serial_no.data, form.last_ping.data, form.ip_add.data, form.email.data, form.password.data)
       db.session.add(newuser)
       db.session.commit()
-      
+
       sendWelcomeEmail(form.email.data, form.serial_no.data)
       session['email'] = newuser.email
       return redirect(url_for('profile'))
-  
+
   elif request.method == 'GET':
     return render_template('signup.html', form=form)
+
+
+@app.route('/ping/<serialno>')
+def ping(serialno):
+  ping_time = int(time.time())
+  print("got ping from pbd " +str(serialno)+" at "+str(ping_time))
+
+  # update the last ping time of the pbd unit
+  try:
+    user = User.query.filter_by( serial_no = (str(serialno)) ).one()
+    user.last_ping =  ping_time
+    db.session.commit()
+    print("updated last_ping time of pbd serial "+user.serial_no+" to "+str(ping_time))
+  except(orm_exc.NoResultFound):
+    print("this pbd was not found, ignore")
+  except(orm_exc.MultipleResultsFound):
+    print("ERROR: more than one pbd found, sno="+str(serialno))
+
+  return render_template('profile.html')
+
 
 @app.route('/profile')
 def profile():
@@ -91,15 +114,15 @@ def signin():
   form = SigninForm()
 
   if 'email' in session:
-    return redirect(url_for('profile')) 
-      
+    return redirect(url_for('profile'))
+
   if request.method == 'POST':
     if form.validate() == False:
       return render_template('signin.html', form=form)
     else:
       session['email'] = form.email.data
       return redirect(url_for('profile'))
-                
+
   elif request.method == 'GET':
     return render_template('signin.html', form=form)
 
@@ -108,6 +131,6 @@ def signout():
 
   if 'email' not in session:
     return redirect(url_for('signin'))
-    
+
   session.pop('email', None)
   return redirect(url_for('home'))
