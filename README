@@ -128,6 +128,10 @@ Python Flask web server which will:
               *    To see all the users:
               *    SELECT User, Host, Password FROM mysql.user;
               *
+              *    To add a row entry in the table:
+              *     insert into pbdusrs (serial_no, last_ping, ip_add, email, pwdhash)
+              *     values ("3rdpbd", 40, "192.168.1.155", "example@gmul.com", "8838");
+              *
               *************************************************************************************
 
 
