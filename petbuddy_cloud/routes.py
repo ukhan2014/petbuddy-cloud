@@ -18,7 +18,8 @@ def sendWelcomeEmail(email_address_str, serial_no):
 
     Your device serial is %s.
   """ % (serial_no)
-  msg = Message("Welcome", sender='PetBuddy Cloud', recipients=[email_address_str])
+  msg = Message("Welcome", sender='PetBuddy Cloud',
+                recipients=[email_address_str])
   msg.body = """
       From: PetBuddy Cloud <petbuddy.cloud@gmail.com>
       %s
@@ -42,7 +43,8 @@ def contact():
       flash('All fields are required.')
       return render_template('contact.html', form=form)
     else:
-      msg = Message(form.subject.data, sender='contact@example.com', recipients=['your_email@example.com'])
+      msg = Message(form.subject.data, sender='contact@example.com',
+                    recipients=['your_email@example.com'])
       msg.body = """
       From: %s <%s>
       %s
@@ -65,7 +67,8 @@ def signup():
     if form.validate() == False:
       return render_template('signup.html', form=form)
     else:
-      newuser = User(form.serial_no.data, form.last_ping.data, form.ip_add.data, form.email.data, form.password.data)
+      newuser = User(form.serial_no.data, form.last_ping.data, form.ip_add.data,
+                     form.email.data, form.password.data)
       db.session.add(newuser)
       db.session.commit()
 
@@ -87,7 +90,8 @@ def ping(serialno):
     user = User.query.filter_by( serial_no = (str(serialno)) ).one()
     user.last_ping =  ping_time
     db.session.commit()
-    print("updated last_ping time of pbd serial "+user.serial_no+" to "+str(ping_time))
+    print("updated last_ping time of pbd serial "+user.serial_no+" to "
+          +str(ping_time))
   except(orm_exc.NoResultFound):
     print("this pbd was not found, ignore")
   except(orm_exc.MultipleResultsFound):
