@@ -82,6 +82,9 @@ def signup():
 
 @app.route('/ping/<serialno>')
 def ping(serialno):
+  remote_ip = request.environ['REMOTE_ADDR']
+  print("remote ip is " + remote_ip)
+
   ping_time = int(time.time())
   print("got ping from pbd " +str(serialno)+" at "+str(ping_time))
 
