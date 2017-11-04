@@ -5,12 +5,12 @@ from flask_mail import Message, Mail
 from models import db, User
 from sqlalchemy.orm import exc as orm_exc
 import time
-#import sys
+import json
 
 mail = Mail()
-#sys.stdout = open('/home/pi/development/petbuddy_cloud/logs.txt', 'w')
 
 def sendWelcomeEmail(email_address_str, serial_no):
+  print("sendWelcomeEmail: add="+email_address_str+" ser="+serial_no)
   msg_data = """
     Welcome to PetBuddy!
     You are all signed up as a PetBuddy user and
@@ -22,8 +22,7 @@ def sendWelcomeEmail(email_address_str, serial_no):
                 recipients=[email_address_str])
   msg.body = """
       From: PetBuddy Cloud <petbuddy.cloud@gmail.com>
-      %s
-      """ % (msg_data)
+      %s """ % (msg_data)
   mail.send(msg)
 
 @app.route('/')
@@ -56,10 +55,28 @@ def contact():
   elif request.method == 'GET':
     return render_template('contact.html', form=form)
 
+@app.route('/devreg', methods=['GET', 'POST'])
+def devreg():
+  print("devreg()")
+  state = True
+
+  if request.method == 'POST':
+    data = request.get_data()
+    print data
+    jdata = json.loads(data)
+    if all(x not in jdata for x in ['fname','lname','serial','email','pwd']):
+      state = False
+
+  print("state is now " + str(state))
+  if state:
+    return "registration complete\n"
+  return "registration failure, complete info not received"
+
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-  form = SignupForm()
+  print("signup()")
 
+  form = SignupForm()
   if 'email' in session:
     return redirect(url_for('profile')) 
 
@@ -82,8 +99,8 @@ def signup():
 
 @app.route('/ping/<serialno>')
 def ping(serialno):
-  remote_ip = request.environ['REMOTE_ADDR']
-  print("remote ip is " + remote_ip)
+  ip = request.environ['REMOTE_ADDR']
+  print("remote ip is " + ip)
 
   ping_time = int(time.time())
   print("got ping from pbd " +str(serialno)+" at "+str(ping_time))
@@ -105,7 +122,6 @@ def ping(serialno):
 
 @app.route('/profile')
 def profile():
-
   if 'email' not in session:
     return redirect(url_for('signin'))
 
