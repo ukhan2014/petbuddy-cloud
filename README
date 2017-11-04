@@ -137,7 +137,9 @@ Python Flask web server which will:
               *
               *************************************************************************************
 
-
+7. Testing the server
+          To send a POST request with a json string we can use cURL:
+          curl -v -H "Content-Type: application/json" -X POST -d '{"key1":"val1","key2":"val2"}' <server ip>/<pagename>
 
               Additional info:
               ****************
