@@ -108,13 +108,7 @@ def signup():
                       form.ip_add.data, form.email.data, form.password.data,
                       form.fname.data, form.lname.data)
 
-      register(newuser)
-      #db.session.add(newuser)
-      #db.session.commit()
-
-      #sendWelcomeEmail(newuser.email, newuser.serial_no)
-      #session['email'] = newuser.email
-      
+      register(newuser)      
       return redirect(url_for('profile'))
 
   elif request.method == 'GET':
