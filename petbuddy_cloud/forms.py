@@ -10,6 +10,8 @@ class ContactForm(Form):
   submit = SubmitField("Send")
 
 class SignupForm(Form):
+  fname = TextField("First Name",  [validators.Required("Please enter your first name")])
+  lname = TextField("Last Name",  [validators.Required("Please enter your last name")])
   serial_no = TextField("Serial Number",  [validators.Required("Please enter your device's serial number")])
   last_ping = TextField("last_ping")
   ip_add = TextField("IP address", [validators.Required("IP required")])
@@ -26,7 +28,7 @@ class SignupForm(Form):
     
     user = User.query.filter_by(email = self.email.data.lower()).first()
     if user:
-      self.email.errors.append("That email is already taken")
+      self.email.errors.append("That email is already registered")
       return False
     else:
       return True

@@ -11,13 +11,18 @@ class User(db.Model):
   ip_add = db.Column(db.String(100))
   email = db.Column(db.String(120), unique=True)
   pwdhash = db.Column(db.String(54))
+  fname = db.Column(db.String(100))
+  lname = db.Column(db.String(100))
   
-  def __init__(self, serial_no, last_ping, ip_add, email, password):
+  def __init__(self, serial_no, last_ping, ip_add, email, password, fname,
+               lname):
     self.serial_no = serial_no
     self.last_ping = last_ping
     self.ip_add = ip_add
     self.email = email.lower()
     self.set_password(password)
+    self.fname = fname
+    self.lname = lname
     
   def set_password(self, password):
     self.pwdhash = generate_password_hash(password)

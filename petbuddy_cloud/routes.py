@@ -64,14 +64,27 @@ def devreg():
     data = request.get_data()
     print data
     jdata = json.loads(data)
-    if all(x not in jdata for x in ['fname','lname','serial','email','pwd']):
+    if all(x not in jdata for x in ['fname','lname','serial',
+           'email','pwd']):
+      print("registration info incomplete")
       state = False
 
   print("state is now " + str(state))
   if state:
+    newuser = User(jdata['fname'], jdata['lname'], jdata['serial'],
+                   jdata['email'], jdata['pwd'])
+    register(newuser, jdata['email'], jdata['serial'])
     return "registration complete\n"
   return "registration failure, complete info not received"
 
+
+def register(usr):
+  db.session.add(usr)
+  db.session.commit()
+
+  sendWelcomeEmail(usr.email, usr.serial_no)
+  session['email'] = usr.email
+	
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
   print("signup()")
@@ -84,13 +97,24 @@ def signup():
     if form.validate() == False:
       return render_template('signup.html', form=form)
     else:
-      newuser = User(form.serial_no.data, form.last_ping.data, form.ip_add.data,
-                     form.email.data, form.password.data)
-      db.session.add(newuser)
-      db.session.commit()
+      print("fname = " + form.fname.data)
+      print("lname = " + form.lname.data)
+      print("ser = " + form.serial_no.data)
+      print("lping = " + form.last_ping.data)
+      print("ip = " + form.ip_add.data)
+      print("email = " + form.email.data)
+      print("pwd = " + form.password.data)
+      newuser = User( form.serial_no.data, form.last_ping.data,
+                      form.ip_add.data, form.email.data, form.password.data,
+                      form.fname.data, form.lname.data)
 
-      sendWelcomeEmail(form.email.data, form.serial_no.data)
-      session['email'] = newuser.email
+      register(newuser)
+      #db.session.add(newuser)
+      #db.session.commit()
+
+      #sendWelcomeEmail(newuser.email, newuser.serial_no)
+      #session['email'] = newuser.email
+      
       return redirect(url_for('profile'))
 
   elif request.method == 'GET':
