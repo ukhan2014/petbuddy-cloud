@@ -58,6 +58,7 @@ def contact():
 @app.route('/devreg', methods=['GET', 'POST'])
 def devreg():
   print("devreg()")
+  ip = request.environ['REMOTE_ADDR']
   state = True
 
   if request.method == 'POST':
@@ -71,11 +72,12 @@ def devreg():
 
   print("state is now " + str(state))
   if state:
-    newuser = User(jdata['fname'], jdata['lname'], jdata['serial'],
-                   jdata['email'], jdata['pwd'])
-    register(newuser, jdata['email'], jdata['serial'])
+    newuser = User(jdata['serial'], str(time.time()), str(ip), jdata['email'],
+                   jdata['pwd'], jdata['fname'], jdata['lname'])
+    register(newuser)
     return "registration complete\n"
-  return "registration failure, complete info not received"
+    
+  return "registration failure, incomplete info"
 
 
 def register(usr):
