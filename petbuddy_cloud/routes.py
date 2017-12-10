@@ -177,3 +177,37 @@ def signout():
 
   session.pop('email', None)
   return redirect(url_for('home'))
+
+
+# Future additions:
+
+# @app.route('/feed', methods=['GET', 'POST'])
+# def feed():
+#   print("feed()")
+#   ip = request.environ['REMOTE_ADDR']
+#   state = True
+
+#   if request.method == 'POST':
+#     data = request.get_data()
+#     print data
+#     jdata = json.loads(data)
+#     if all(x not in jdata for x in ['serial',
+#            'authtoken']):
+#       print("Don't know which device to turn servo on")
+#       state = False
+#     else if(!do_auth(serialno, authtoken)):
+#       print("auth failed")
+#       state = False
+
+#   print("state is now " + str(state))
+#   if state:
+#     turnServo(jdata['serial'], str(ip), jdata['authtoken'])
+#     return "turnServo command dispatched\n"
+
+#   return "info incomplete or auth not accepted"
+
+# def turnServo(serialno, authentication):
+#   print(turnServo)
+
+# def do_auth(serialno, authtoken):
+#   print("Do authentication of " + serialno)
