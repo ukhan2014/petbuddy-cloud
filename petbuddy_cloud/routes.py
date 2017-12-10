@@ -186,7 +186,7 @@ def signout():
 #   print("feed()")
 #   ip = request.environ['REMOTE_ADDR']
 #   state = True
-
+#
 #   if request.method == 'POST':
 #     data = request.get_data()
 #     print data
@@ -198,13 +198,32 @@ def signout():
 #     else if(!do_auth(serialno, authtoken)):
 #       print("auth failed")
 #       state = False
-
+#
 #   print("state is now " + str(state))
 #   if state:
 #     turnServo(jdata['serial'], str(ip), jdata['authtoken'])
 #     return "turnServo command dispatched\n"
-
+#
 #   return "info incomplete or auth not accepted"
+
+# Get a pbd to snap a photo
+#@app.route('/snap', methods=['GET', 'POST'])
+#def snap():
+#  print("snap()")
+
+# Get a pbd to open feed door
+
+
+
+# Get a pbd to close feed door
+
+
+# Factory reset a pbd
+
+
+# Reboot a pbd
+
+
 
 # def turnServo(serialno, authentication):
 #   print(turnServo)
