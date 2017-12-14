@@ -173,6 +173,7 @@ Python Flask web server which will:
               To see the entries in the development.pbdusrs table:
                 mysql> use development;
                 mysql> select * from pbdusrs;
+                mysql> select serial_no, last_ping, ip_add, email from pbdusrs;
 
               To delete an row from the table:
                 mysql> delete from pbdusrs where email =  "email.address@domain.com"; 
