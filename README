@@ -94,7 +94,15 @@ Python Flask web server which will:
               Using this: https://docs.python.org/2/howto/logging.html
               Apache is unable to create a logfile in the pbd directory though. So first step of creating the logfile ends up failing.
               Permissions issue. mod_wsgi seems to be running as a different user and doesn't have permissions for the project directory.
-              So to fix this, just create a folder that mod_wsgi is allowed to access (r/w).
+              So to fix this, just create a folder that mod_wsgi is allowed to access (r/w):
+              1. Create a dir under /var/www/ called logs:
+                 $ sudo mkdir /var/www/logs
+              2. Go to the directory:
+                 $ cd /var/www/
+              3. Change the owner to www-data user:
+                 $ sudo chown www-data logs
+              4. Change the group to www-data group:
+                 $ sudo chgrp www-data logs
 
 6. mysql setup:
 
