@@ -191,6 +191,12 @@ Python Flask web server which will:
 
               To delete an row from the table:
                 mysql> delete from pbdusrs where email =  "email.address@domain.com"; 
+                
+8. Setup with nginx, uwsgi on macOS high sierra:
+          1. install nginx
+             $ brew install nginx
+             The configuration file will be at: /usr/local/etc/nginx/nginx.conf
+          2. 
 
 ***********************************************************************************
 
