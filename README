@@ -196,7 +196,10 @@ Python Flask web server which will:
           1. install nginx
              $ brew install nginx
              The configuration file will be at: /usr/local/etc/nginx/nginx.conf
-          2. 
+          2. uwsgi will be started from within the virtual env, it will get nginx going as well
+             Put a print statement or two into the __init__.py file of the python app package
+             and uwsgi will log it when it starts. This will confirm the package has been started
+             properly by uwsgi.
 
 ***********************************************************************************
 
