@@ -200,6 +200,7 @@ Python Flask web server which will:
              Put a print statement or two into the __init__.py file of the python app package
              and uwsgi will log it when it starts. This will confirm the package has been started
              properly by uwsgi.
+          3. TODO: localhost:8080 does not show app, need to figure out what's going on
 
 ***********************************************************************************
 
