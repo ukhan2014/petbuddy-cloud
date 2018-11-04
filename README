@@ -1,3 +1,5 @@
+These instructions are for raspi 3 rev B hardware running raspbian.
+
 Python Flask web server which will:
   1. enumerate any petbuddy-device (PBD) which connects to the server and manage a connection to it.
   2. enumerate any petbuddy-companion app (PBC) which connects to the server and manage a connection to it.
@@ -5,6 +7,16 @@ Python Flask web server which will:
   4. use a sql server which will track all PBDs out in the field. It will offer a signup process during the onboarding that will be accessed through the PBC app and perhaps also a web interface
 
 
+New instructions (python3):
+        i. Clone this repo
+       ii. Do python3 in terminal and make sure it is installed
+      iii. Do pip3 in terminal to check if it is there [if not do "sudo apt-get install python3-pip"]
+       iv. Once pip3 is installed do "sudo pip3 install virtualenv" to install virtualenv
+        v. Do "virtualenv petbuddy_cloud" to create a virtualenv inside the repo folder. Three additional folders will be created [bin/ include/ lib/]
+       vi. After the virtualenv is set up, go into the petbuddy cloud folder "cd petbuddy_cloud" and activate the virtualenv ". bin/activate"
+      vii. 
+
+Old instructions (python2):
 1. Clone the petbuddy_cloud repo and Install python2
 
 2. Install virtualenv:
