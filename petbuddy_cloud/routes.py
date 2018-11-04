@@ -1,8 +1,8 @@
 from petbuddy_cloud import app
 from flask import render_template, request, flash, session, url_for, redirect
-from forms import ContactForm, SignupForm, SigninForm
+from petbuddy_cloud.forms import ContactForm, SignupForm, SigninForm
 from flask_mail import Message, Mail
-from models import db, User
+from petbuddy_cloud.models import db, User
 from sqlalchemy.orm import exc as orm_exc
 import time
 import json
@@ -63,7 +63,7 @@ def devreg():
 
   if request.method == 'POST':
     data = request.get_data()
-    print data
+    print( data)
     jdata = json.loads(data)
     if all(x not in jdata for x in ['fname','lname','serial',
            'email','pwd']):

@@ -1,6 +1,6 @@
-from flask.ext.wtf import Form
+from flask_wtf import Form
 from wtforms import TextField, TextAreaField, SubmitField, validators, ValidationError, PasswordField
-from models import db, User
+from petbuddy_cloud.models import db, User
 
 class ContactForm(Form):
   name = TextField("Name",  [validators.Required("Please enter your name.")])
